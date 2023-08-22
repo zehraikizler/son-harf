@@ -1,31 +1,24 @@
-"use client"
-import React from 'react';
-import "regenerator-runtime/runtime";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import Input from '@/components/input';
+import React from 'react'
+import Answers from '@/components/answers'
+import Count from '@/components/count'
+import GamingBox from '@/components/gaming-box'
+import Score from '@/components/score'
 
-const Dictaphone = () => {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition
-  } = useSpeechRecognition();
-
-  if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
-  }
-
+const Game = () => {
   return (
-    <div>
-      <Input transcript={transcript} />
-      <div className='flex gap-3 mt-6 mb-3'>
-      <button onClick={SpeechRecognition.startListening} className='bg-blue-600 rounded-lg px-3 text-white'>Start</button>
-      <button onClick={SpeechRecognition.stopListening} className='bg-red-600 rounded-lg px-3 text-white'>Stop</button>
-      <button onClick={resetTranscript} className='bg-green-600 rounded-lg px-3 text-white'>Reset</button>
+    <div className='grid grid-cols-8'>
+      <div className='bg-red-600 col-span-2'>
+        <Score />
       </div>
-      <p className='text-sm font-semibold'>Microphone: {listening ? 'on' : 'off'}</p>
+      <div className='bg-green-600 col-span-4'>
+        <Answers />
+        <GamingBox />
+      </div>
+      <div className='bg-blue-600 col-span-2'>
+        <Count />
+      </div>
     </div>
-  );
-};
-export default Dictaphone;
+  )
+}
+
+export default Game

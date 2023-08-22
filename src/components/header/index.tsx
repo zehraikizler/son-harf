@@ -34,7 +34,7 @@ export default function Header() {
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                      <p className='text-white italic font-extrabold text-xl me-4'>
-                     Sound Word
+                     Son Harf
                      </p>
                     </div>
                     <div className="hidden md:block">
