@@ -2,7 +2,14 @@ import React from 'react'
 
 const Answers = () => {
   return (
-    <div>Answers</div>
+    <div>
+      <ul>
+        <li>Furkan</li>
+        <li>Nergis</li>
+        <li>Serkan</li>
+        <li>Nadire</li>
+      </ul>
+    </div>
   )
 }
 
