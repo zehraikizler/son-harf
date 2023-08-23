@@ -8,8 +8,6 @@ import SpeechRecognition, {
 const GamingBox = () => {
   const {
     transcript,
-    listening,
-    resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
