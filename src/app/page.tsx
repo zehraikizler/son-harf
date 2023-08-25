@@ -1,7 +1,7 @@
 import React from "react";
 import Answers from "@/components/answers";
 import Count from "@/components/count";
-import GamingBox from "@/components/say-name";
+import SayName from "@/components/say-name";
 import Score from "@/components/score";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -15,10 +15,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
       </div>
       <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">
         <div className="border rounded-xl h-80 lg:h-60 p-8 overflow-y-scroll no-scrollbar flex flex-col">
-          <Answers />
+          <Answers/>
         </div>
         <div className="mt-auto">
-          <GamingBox />
+          <SayName/>
         </div>
       </div>
     </div>
