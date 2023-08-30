@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, {useState, useEffect} from "react";
 import Answers from "@/components/answers";
 import Count from "@/components/count";
 import SayName from "@/components/say-name";
@@ -15,10 +16,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
       </div>
       <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">
         <div className="border rounded-xl h-80 lg:h-60 p-8 overflow-y-scroll no-scrollbar flex flex-col">
-          <Answers/>
+          <Answers />
         </div>
         <div className="mt-auto">
-          <SayName/>
+          <SayName />
         </div>
       </div>
     </div>

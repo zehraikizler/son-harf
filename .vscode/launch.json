@@ -1,0 +1,12 @@
+{
+  "name": "Next.js: debug full stack",
+  "type": "node-terminal",
+  "request": "launch",
+  "command": "npm run dev",
+  "cwd": "${workspaceFolder}/client",
+  "serverReadyAction": {
+      "pattern": "started server on .+, url: (https?://.+)",
+      "uriFormat": "%s",
+      "action": "debugWithChrome"
+  }
+}

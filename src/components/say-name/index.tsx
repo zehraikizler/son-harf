@@ -1,14 +1,13 @@
 "use client";
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { useAnswersContext } from '@/context';
-import { async } from "regenerator-runtime";
+import { useMessages } from "@/utils/useMessages";
 
 const SayName = () => {
-  const {answers, setAnswers} = useAnswersContext()
+  const { messages, addMessage } = useMessages();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
@@ -16,16 +15,15 @@ const SayName = () => {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
-  async function AddAnswer() {
-     if (transcript !== "" && listening == false) {
-      const newAnswers = [...answers, {sentBy:'user', name:transcript}]
-      setAnswers(newAnswers);
-      console.log(answers)
+  const AddAnswer = async () => {
+    if (transcript !== "" && listening == false) {
+      await addMessage(transcript);
+      console.log(messages);
     }
-  }
+  };
 
   useEffect(() => {
-     AddAnswer();
+    AddAnswer();
   }, [!listening]);
 
   return (
@@ -35,7 +33,7 @@ const SayName = () => {
       </div>
       <div className="flex justify-center my-3">
         <button
-          onClick={SpeechRecognition.startListening}
+          onClick={() => SpeechRecognition.startListening()}
           className="bg-blue-600 rounded-3xl px-3 text-white w-48 h-14 font-extrabold text-2xl"
         >
           Start
