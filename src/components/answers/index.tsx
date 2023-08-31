@@ -1,9 +1,14 @@
 "use client";
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import { useMessages } from "@/utils/useMessages";
 
 const Answers = () => {
   const { messages, isLoadingAnswer } = useMessages();
+  let elRefs = useRef<any[]>([]);
+  useEffect(() => {
+    let size = elRefs.current.length;
+    elRefs.current[size - 1].focus();
+  });
   return (
     <div>
       {messages?.map((message, i) => {
@@ -15,7 +20,8 @@ const Answers = () => {
             className={`flex mb-4 fade-up ${
               isUser ? "justify-end" : "justify-start"
             } ${i === 1 ? "max-w-md" : ""}`}
-            key={message.content}
+            key={i}
+            ref={(el) => (elRefs.current = [...elRefs.current, el])}
           >
             {!isUser && (
               <img
@@ -26,7 +32,7 @@ const Answers = () => {
             )}
             <div
               style={{ maxWidth: "calc(100% - 45px)" }}
-              className={`group relative px-3 py-2 rounded-lg ${
+              className={`group relative px-3 py-2 rounded-lg capitalize ${
                 isUser
                   ? "bg-purple-200 px-3 py-2 rounded-3xl rounded-br-none mr-2"
                   : "bg-pink-200 px-3 py-2 rounded-3xl rounded-bl-none ml-2"

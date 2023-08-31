@@ -1,27 +1,36 @@
-"use client"
-import React, {useState, useEffect} from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Answers from "@/components/answers";
 import Count from "@/components/count";
 import SayName from "@/components/say-name";
 import Score from "@/components/score";
+import LoadingGame from "@/components/loadingGame";
+import { useMessages } from "@/utils/useMessages";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const { isLoadingGame } = useMessages();
   return (
-    <div className="game-page bg-white mx-auto py-6 sm:px-6 lg:px-8 grid grid-cols-8">
-      <div className="col-span-4 lg:col-span-2 p-3 h-14">
-        <Score />
-      </div>
-      <div className="col-span-4 lg:col-span-2 lg:order-last p-3 h-14">
-        <Count />
-      </div>
-      <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">
-        <div className="border rounded-xl h-80 lg:h-60 p-8 overflow-y-scroll no-scrollbar flex flex-col">
-          <Answers />
+    <div className="game-page py-6 sm:px-6 lg:px-8 ">
+      {isLoadingGame ? (
+       <LoadingGame />
+      ) : (
+        <div className="grid grid-cols-8">
+          <div className="col-span-4 lg:col-span-2 p-3 h-14">
+            <Score />
+          </div>
+          <div className="col-span-4 lg:col-span-2 lg:order-last p-3 h-14">
+            <Count />
+          </div>
+          <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">
+            <div className="bg-white border shadow-lg rounded-xl h-80 lg:h-60 p-8 overflow-y-scroll no-scrollbar flex flex-col">
+              <Answers />
+            </div>
+            <div className="mt-auto">
+              <SayName />
+            </div>
+          </div>
         </div>
-        <div className="mt-auto">
-          <SayName />
-        </div>
-      </div>
+      )}
     </div>
   );
 }

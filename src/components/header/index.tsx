@@ -1,11 +1,9 @@
 export default function Header() {
   return (
-    <div className="bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 shadow-xl px-4 sm:px-6 lg:px-8">
-      <div className="flex h-16 items-center justify-center">
-        <p className="text-gray-700 font-extrabold text-3xl me-4">
+      <div className="flex h-16 pt-4 items-center justify-center">
+        <p className="bg-gradient-to-l from-indigo-700 via-purple-700 to-pink-700 bg-clip-text text-transparent text-5xl font-extrabold">
           Son Harf
         </p>
       </div>
-    </div>
   );
 }

@@ -2,9 +2,9 @@
 import "../styles/global.css";
 import "../styles/reset.css";
 import { Inter } from "next/font/google";
-import Header from "../components/header";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import "regenerator-runtime/runtime";
-import { AnswersProvider } from "@/context";
 import { MessagesProvider } from "@/utils/useMessages";
 import { ToastProvider } from '@apideck/components'
 
@@ -16,16 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full bg-white">
+    <html lang="en" className="h-full bg-gradient-to-l from-indigo-50 via-purple-50 to-pink-50">
       <body className={inter.className + " h-full vsc-initialized"}>
         <ToastProvider>
         <MessagesProvider>
-          <AnswersProvider>
-            <main className="font-mono">
+            <main className="font-mono flex flex-col">
               <Header />
               {children}
+              <Footer />
             </main>
-          </AnswersProvider>
         </MessagesProvider>
         </ToastProvider>
       </body>
