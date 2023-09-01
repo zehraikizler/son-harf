@@ -2,7 +2,18 @@ import React from "react";
 import { useMessages } from "@/utils/useMessages";
 
 const LoadingGame = () => {
-  const { isLoadingGame ,setIsLoadingGame } = useMessages();
+  const { setIsLoadingGame, setPlayingWith } = useMessages();
+
+  const withComputer = () => {
+    setPlayingWith("computer")
+    setIsLoadingGame(false)
+  }
+
+  const withChatGpt = () => {
+    setPlayingWith("chatGpt")
+    setIsLoadingGame(false)
+  }
+
   return (
     <div className="flex items-center justify-center flex-col gap-6 h-full">
       <h1 className="text-4xl">Merhaba</h1>
@@ -11,10 +22,20 @@ const LoadingGame = () => {
         oynadığı, rakibin söylediği ismin son harfinden isim türetmeye dayanan
         bir kelime oyunu deneyidir.
       </p>
-      <button className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
-      onClick={() => setIsLoadingGame(false)} >
-        Oyuna Başla
-      </button>
+      <div className="flex flex-col lg:flex-row gap-4">
+        <button
+          className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 w-60 text-white rounded-2xl py-2 px-4 font-semibold text-lg mt-4"
+          onClick={() => withComputer()}
+        >
+          Bilgisayar ile oyna
+        </button>
+        <button
+          className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 w-60 text-white rounded-2xl py-2 px-4 font-semibold text-lg mt-4"
+          onClick={() => withChatGpt()}
+        >
+          ChatGpt ile oyna
+        </button>
+      </div>
     </div>
   );
 };

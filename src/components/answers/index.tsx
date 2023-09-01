@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import { useMessages } from "@/utils/useMessages";
 
 const Answers = () => {
@@ -32,7 +32,7 @@ const Answers = () => {
             )}
             <div
               style={{ maxWidth: "calc(100% - 45px)" }}
-              className={`group relative px-3 py-2 rounded-lg capitalize ${
+              className={`group relative rounded-lg capitalize ${
                 isUser
                   ? "bg-purple-200 px-3 py-2 rounded-3xl rounded-br-none mr-2"
                   : "bg-pink-200 px-3 py-2 rounded-3xl rounded-bl-none ml-2"
@@ -53,7 +53,7 @@ const Answers = () => {
       {isLoadingAnswer && (
         <div className="flex justify-start mb-4">
           <img
-            src="https://www.teamsmart.ai/next-assets/team/ai.jpg"
+            src="https://as2.ftcdn.net/v2/jpg/01/85/13/47/1000_F_185134767_3zI4z0vWkI6ZBzCgbVC6tG93OidfDqO7.jpg"
             className="w-9 h-9 rounded-full"
             alt="avatar"
           />

@@ -15,19 +15,15 @@ export async function POST(req: Request, res: Response) {
   });
 
   try {
-    // const response = await fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${apiKey}`
-    //   },
-    //   body
-    // })
-    // const data = await response.json()
-    const data = {
-      role: "assistant",
-      content: "Hadi oyuna başlayalım.",
-    };
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body
+    })
+    const data = await response.json()
     return NextResponse.json({ data });
   } catch (error) {
     return NextResponse.json({ error, status: 500 });

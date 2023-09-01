@@ -17,6 +17,8 @@ interface ContextProps {
   isLoadingAnswer: boolean;
   isLoadingGame: boolean;
   setIsLoadingGame:   Dispatch<SetStateAction<boolean>>;
+  playingWith: string;
+  setPlayingWith: Dispatch<SetStateAction<string>>;
 }
 
 const ChatsContext = createContext<Partial<ContextProps>>({});
@@ -108,9 +110,8 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
     }
   };
 
-
   return (
-    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer, isLoadingGame, setIsLoadingGame }}>
+    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer, isLoadingGame, setIsLoadingGame, playingWith, setPlayingWith }}>
       {children}
     </ChatsContext.Provider>
   );

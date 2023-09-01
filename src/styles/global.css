@@ -15,7 +15,7 @@ main {
 }
 
 .game-page {
-  height: 70vh !important;
+  min-height: 60vh !important;
 }
 
 .lastletter {
