@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
   Dispatch,
-  SetStateAction 
+  SetStateAction,
 } from "react";
 import { sendMessage } from "./sendMessage";
 import { checkGameOver, computerAnswer, endGame } from "@/service/game";
@@ -16,11 +16,11 @@ interface ContextProps {
   addMessage: (content: string) => Promise<void>;
   isLoadingAnswer: boolean;
   isLoadingGame: boolean;
-  setIsLoadingGame:   Dispatch<SetStateAction<boolean>>;
+  setIsLoadingGame: Dispatch<SetStateAction<boolean>>;
   playingWith: string;
   setPlayingWith: Dispatch<SetStateAction<string>>;
   isGameOn: boolean;
-  setIsGameOn:   Dispatch<SetStateAction<boolean>>;
+  setIsGameOn: Dispatch<SetStateAction<boolean>>;
 }
 
 const GameContext = createContext<Partial<ContextProps>>({});
@@ -63,7 +63,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
   useEffect(() => {
     const initializeChat = () => {
-
       setMessages([systemMessage, welcomeMessage]);
     };
 
@@ -81,30 +80,30 @@ export function GameProvider({ children }: { children: ReactNode }) {
       };
       const newMessages = [...messages, newMessage];
       await setMessages(newMessages);
-      let isGameOver = undefined
+      let isGameOver = undefined;
       isGameOver = checkGameOver(newMessages);
-      if(isGameOver) {
-        endGame()
-        setIsLoadingGame(true)
+      if (isGameOver) {
+        endGame();
+        setIsLoadingGame(true);
         setMessages([systemMessage, welcomeMessage]);
-        return
+        return;
       }
-      let reply= undefined;
-      if(playingWith === "chatGpt") {
+      let reply = undefined;
+      if (playingWith === "chatGpt") {
         const response = await sendMessage(newMessages);
         const { data } = await response?.json();
         reply = data?.choices[0].message;
       } else {
-        reply = computerAnswer(content) 
+        reply = computerAnswer(content);
       }
 
       await setMessages([...newMessages, reply]);
       isGameOver = checkGameOver([...newMessages, reply]);
-      if(isGameOver) {
-        endGame()
-        setIsLoadingGame(true)
+      if (isGameOver) {
+        endGame();
+        setIsLoadingGame(true);
         setMessages([systemMessage, welcomeMessage]);
-        return
+        return;
       }
     } catch (error) {
       addToast({ title: "An error occurred", type: "error" });
@@ -114,7 +113,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <GameContext.Provider value={{ messages, addMessage, isLoadingAnswer, isLoadingGame, setIsLoadingGame, playingWith, setPlayingWith, isGameOn, setIsGameOn }}>
+    <GameContext.Provider
+      value={{
+        messages,
+        addMessage,
+        isLoadingAnswer,
+        isLoadingGame,
+        setIsLoadingGame,
+        playingWith,
+        setPlayingWith,
+        isGameOn,
+        setIsGameOn,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );
