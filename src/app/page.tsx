@@ -5,10 +5,11 @@ import Count from "@/components/count";
 import SayName from "@/components/say-name";
 import Score from "@/components/score";
 import LoadingGame from "@/components/loadingGame";
-import { useMessages } from "@/utils/useMessages";
+import { useGame } from "@/utils/useGame";
+import ChoosePlayWith from "@/components/choosePlayWith";
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  const { isLoadingGame } = useMessages();
+  const { isLoadingGame } = useGame();
   return (
     <div className="game-page py-6 sm:px-6 lg:px-8 ">
       {isLoadingGame ? (
@@ -16,9 +17,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
       ) : (
         <div className="grid grid-cols-8">
           <div className="col-span-4 lg:col-span-2 p-3 h-14">
-            <Score />
+            <ChoosePlayWith />
           </div>
           <div className="col-span-4 lg:col-span-2 lg:order-last p-3 h-14">
+            <Score />
             <Count />
           </div>
           <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">

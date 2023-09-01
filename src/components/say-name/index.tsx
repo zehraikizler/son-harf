@@ -4,10 +4,10 @@ import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { useMessages } from "@/utils/useMessages";
+import { useGame } from "@/utils/useGame";
 
 const SayName = () => {
-  const { messages, addMessage } = useMessages();
+  const { messages, addMessage, isGameOn } = useGame();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
@@ -31,12 +31,22 @@ const SayName = () => {
         {transcript.split("").reverse().join("")}
       </div>
       <div className="flex justify-center my-3">
-        <button
-          onClick={() => SpeechRecognition.startListening()}
-          className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
-        >
-          Başla
-        </button>
+        {!isGameOn ? (
+          <button
+            disabled
+            onClick={() => SpeechRecognition.startListening()}
+            className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 opacity-50 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
+          >
+            Başla
+          </button>
+        ) : (
+          <button
+            onClick={() => SpeechRecognition.startListening()}
+            className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
+          >
+            Başla
+          </button>
+        )}
       </div>
     </div>
   );

@@ -51,3 +51,22 @@ main {
 .loader span:nth-child(3) {
   animation-delay: 150ms;
 }
+
+/* animation */
+
+.up-down-animation {
+  -webkit-animation: mover 1s infinite  alternate;
+  animation: mover 1s infinite  alternate;
+}
+.up-down-animation {
+  -webkit-animation: mover 1s infinite  alternate;
+  animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+  0% { transform: translateY(5px); }
+  100% { transform: translateY(-5px); }
+}
+@keyframes mover {
+  0% { transform: translateY(5px); }
+  100% { transform: translateY(-5px); }
+}

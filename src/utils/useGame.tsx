@@ -19,16 +19,19 @@ interface ContextProps {
   setIsLoadingGame:   Dispatch<SetStateAction<boolean>>;
   playingWith: string;
   setPlayingWith: Dispatch<SetStateAction<string>>;
+  isGameOn: boolean;
+  setIsGameOn:   Dispatch<SetStateAction<boolean>>;
 }
 
-const ChatsContext = createContext<Partial<ContextProps>>({});
+const GameContext = createContext<Partial<ContextProps>>({});
 
-export function MessagesProvider({ children }: { children: ReactNode }) {
+export function GameProvider({ children }: { children: ReactNode }) {
   const { addToast } = useToast();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
   const [isLoadingAnswer, setIsLoadingAnswer] = useState(false);
   const [isLoadingGame, setIsLoadingGame] = useState(true);
-  const [playingWith, setPlayingWith] = useState("computer");
+  const [playingWith, setPlayingWith] = useState("");
+  const [isGameOn, setIsGameOn] = useState(false);
   const systemMessage: ChatCompletionRequestMessage = {
     role: "system",
     content: `Seninle birlikte bir isim oyunu oynayacağız ve oyunun kuralları aşağıdaki maddelerde verilmiştir.
@@ -111,12 +114,12 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer, isLoadingGame, setIsLoadingGame, playingWith, setPlayingWith }}>
+    <GameContext.Provider value={{ messages, addMessage, isLoadingAnswer, isLoadingGame, setIsLoadingGame, playingWith, setPlayingWith, isGameOn, setIsGameOn }}>
       {children}
-    </ChatsContext.Provider>
+    </GameContext.Provider>
   );
 }
 
-export const useMessages = () => {
-  return useContext(ChatsContext) as ContextProps;
+export const useGame = () => {
+  return useContext(GameContext) as ContextProps;
 };
