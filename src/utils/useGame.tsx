@@ -32,6 +32,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [isLoadingGame, setIsLoadingGame] = useState(true);
   const [playingWith, setPlayingWith] = useState("");
   const [isGameOn, setIsGameOn] = useState(false);
+  
   const systemMessage: ChatCompletionRequestMessage = {
     role: "system",
     content: `Seninle birlikte bir isim oyunu oynayacağız ve oyunun kuralları aşağıdaki maddelerde verilmiştir.

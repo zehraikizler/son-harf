@@ -5,11 +5,13 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { useGame } from "@/utils/useGame";
+import { async } from "regenerator-runtime";
 
 const SayName = () => {
-  const { messages, addMessage, isGameOn } = useGame();
+  const {addMessage, isGameOn, isLoadingAnswer } = useGame();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
+
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -31,22 +33,13 @@ const SayName = () => {
         {transcript.split("").reverse().join("")}
       </div>
       <div className="flex justify-center my-3">
-        {!isGameOn ? (
-          <button
-            disabled
-            onClick={() => SpeechRecognition.startListening()}
-            className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 opacity-50 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
-          >
-            Başla
-          </button>
-        ) : (
-          <button
-            onClick={() => SpeechRecognition.startListening()}
-            className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
-          >
-            Başla
-          </button>
-        )}
+        <button
+          disabled={!isGameOn || isLoadingAnswer}
+          onClick={() => SpeechRecognition.startListening()}
+          className={`bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4 ${!isGameOn || isLoadingAnswer ? "opacity-50" : ""}`}
+        >
+          Başla
+        </button>
       </div>
     </div>
   );
