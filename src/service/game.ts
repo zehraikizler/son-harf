@@ -1,4 +1,11 @@
 import db from "@/db/names.json";
+import { sendMessage } from '@/utils/sendMessage'
+
+export async function chatGptAnswer(newMessages: any[]) {
+  const response = await sendMessage(newMessages);
+  const { data } = await response?.json();
+  return data?.choices[0].message;
+}
 
 export function computerAnswer(content: string) {
   let namesList: string[] = db;

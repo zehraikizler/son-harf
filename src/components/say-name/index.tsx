@@ -8,7 +8,7 @@ import { useGame } from "@/utils/useGame";
 import { async } from "regenerator-runtime";
 
 const SayName = () => {
-  const {addMessage, isGameOn, isLoadingAnswer } = useGame();
+  const {newName, isGameOn, isLoadingAnswer } = useGame();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
@@ -19,7 +19,7 @@ const SayName = () => {
 
   const AddAnswer = async () => {
     if (transcript !== "" && listening == false) {
-      await addMessage(transcript);
+      await newName(transcript);
     }
   };
 

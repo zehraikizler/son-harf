@@ -9,16 +9,15 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { sendMessage } from "./sendMessage";
 import {
   checkGameOver,
   computerAnswer,
-  endGame,
+  chatGptAnswer,
   getScore,
 } from "@/service/game";
 interface ContextProps {
   messages: ChatCompletionRequestMessage[];
-  addMessage: (content: string) => Promise<void>;
+  newName: (content: string) => Promise<void>;
   resetGame: Function;
   isLoadingAnswer: boolean;
   isLoadingGame: boolean;
@@ -77,7 +76,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
   function resetGame() {
     setMessages([systemMessage, welcomeMessage]);
     setIsLoadingAnswer(false);
-    setIsLoadingGame(true);
     setPlayingWith("");
     setIsGameOn(false);
     setScore(0);
@@ -94,43 +92,48 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   }, [messages?.length, setMessages]);
 
-  const addMessage = async (content: string) => {
+  const userAnswerTurn = async (content: string) => {
+    const newMessage: ChatCompletionRequestMessage = {
+      role: "user",
+      content,
+    };
+
+    setMessages((oldMessages: any[]) => {
+      const newMessages = [...oldMessages, newMessage];
+      if (gameOverControl(newMessages, "system")) return newMessages;
+
+      setScore(getScore(newMessages));
+      return newMessages;
+    });
+  };
+
+  const systemAnswerTurn = async (content: string) => {
+    let reply = {};
+    if (playingWith === "chatGpt") {
+      reply = await chatGptAnswer(messages);
+    } else {
+      reply = computerAnswer(content);
+    }
+
+    setMessages((oldMessages: any[]) => {
+      gameOverControl([...oldMessages, reply], "user");
+      return [...oldMessages, reply];
+    });
+  };
+
+  const gameOverControl = (messages: any[], winner: string) => {
+    if (checkGameOver(messages)) {
+      setWinner(winner);
+      setGameOver(true);
+      return true;
+    }
+  };
+
+  const newName = async (content: string) => {
     setIsLoadingAnswer(true);
     try {
-      const newMessage: ChatCompletionRequestMessage = {
-        role: "user",
-        content,
-      };
-      const newMessages = [...messages, newMessage];
-      await setMessages(newMessages);
-      setScore(getScore(newMessages));
-      let isGameOver = undefined;
-      isGameOver = checkGameOver(newMessages);
-      if (isGameOver) {
-        setWinner(playingWith);
-        endGame();
-        setGameOver(true);
-        setMessages([systemMessage, welcomeMessage]);
-        return;
-      }
-      let reply = undefined;
-      if (playingWith === "chatGpt") {
-        const response = await sendMessage(newMessages);
-        const { data } = await response?.json();
-        reply = data?.choices[0].message;
-      } else {
-        reply = computerAnswer(content);
-      }
-
-      await setMessages([...newMessages, reply]);
-      isGameOver = checkGameOver([...newMessages, reply]);
-      if (isGameOver) {
-        setWinner("user");
-        endGame();
-        setGameOver(true);
-        setMessages([systemMessage, welcomeMessage]);
-        return;
-      }
+      await userAnswerTurn(content);
+      await systemAnswerTurn(content);
     } catch (error) {
       addToast({ title: "An error occurred", type: "error" });
     } finally {
@@ -142,7 +145,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     <GameContext.Provider
       value={{
         messages,
-        addMessage,
+        newName,
         resetGame,
         isLoadingAnswer,
         isLoadingGame,
