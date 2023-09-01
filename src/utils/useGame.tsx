@@ -10,10 +10,16 @@ import {
   SetStateAction,
 } from "react";
 import { sendMessage } from "./sendMessage";
-import { checkGameOver, computerAnswer, endGame } from "@/service/game";
+import {
+  checkGameOver,
+  computerAnswer,
+  endGame,
+  getScore,
+} from "@/service/game";
 interface ContextProps {
   messages: ChatCompletionRequestMessage[];
   addMessage: (content: string) => Promise<void>;
+  resetGame: Function;
   isLoadingAnswer: boolean;
   isLoadingGame: boolean;
   setIsLoadingGame: Dispatch<SetStateAction<boolean>>;
@@ -21,6 +27,9 @@ interface ContextProps {
   setPlayingWith: Dispatch<SetStateAction<string>>;
   isGameOn: boolean;
   setIsGameOn: Dispatch<SetStateAction<boolean>>;
+  score: Number;
+  gameOver: boolean;
+  winner: string;
 }
 
 const GameContext = createContext<Partial<ContextProps>>({});
@@ -32,7 +41,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [isLoadingGame, setIsLoadingGame] = useState(true);
   const [playingWith, setPlayingWith] = useState("");
   const [isGameOn, setIsGameOn] = useState(false);
-  
+  const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [winner, setWinner] = useState("");
+
   const systemMessage: ChatCompletionRequestMessage = {
     role: "system",
     content: `Seninle birlikte bir isim oyunu oynayacağız ve oyunun kuralları aşağıdaki maddelerde verilmiştir.
@@ -62,9 +74,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
     role: "assistant",
     content: "Hadi oyuna başlayalım.",
   };
+  function resetGame() {
+    setMessages([systemMessage, welcomeMessage]);
+    setIsLoadingAnswer(false);
+    setIsLoadingGame(true);
+    setPlayingWith("");
+    setIsGameOn(false);
+    setScore(0);
+    setGameOver(false);
+    setWinner("");
+  }
   useEffect(() => {
     const initializeChat = () => {
-      setMessages([systemMessage, welcomeMessage]);
+      resetGame();
     };
 
     if (!messages?.length) {
@@ -81,11 +103,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
       };
       const newMessages = [...messages, newMessage];
       await setMessages(newMessages);
+      setScore(getScore(newMessages));
       let isGameOver = undefined;
       isGameOver = checkGameOver(newMessages);
       if (isGameOver) {
+        setWinner(playingWith);
         endGame();
-        setIsLoadingGame(true);
+        setGameOver(true);
         setMessages([systemMessage, welcomeMessage]);
         return;
       }
@@ -101,8 +125,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
       await setMessages([...newMessages, reply]);
       isGameOver = checkGameOver([...newMessages, reply]);
       if (isGameOver) {
+        setWinner("user");
         endGame();
-        setIsLoadingGame(true);
+        setGameOver(true);
         setMessages([systemMessage, welcomeMessage]);
         return;
       }
@@ -118,6 +143,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       value={{
         messages,
         addMessage,
+        resetGame,
         isLoadingAnswer,
         isLoadingGame,
         setIsLoadingGame,
@@ -125,6 +151,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setPlayingWith,
         isGameOn,
         setIsGameOn,
+        score,
+        gameOver,
+        winner,
       }}
     >
       {children}

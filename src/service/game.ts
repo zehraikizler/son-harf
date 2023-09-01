@@ -31,3 +31,7 @@ export function checkGameOver(messages: any) {
 export function endGame() {
   return "oyun bitti";
 }
+
+export function getScore(messages: any) {
+  return messages.filter((el: any) => el.role === "user").length;
+}
