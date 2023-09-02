@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Answers from "@/components/answers";
-import Count from "@/components/count";
+import Timer from "@/components/timer";
 import SayName from "@/components/say-name";
 import Score from "@/components/score";
 import LoadingGame from "@/components/loadingGame";
@@ -33,7 +33,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         </div>
         <div className="col-span-8 lg:col-span-2 lg:order-last px-4 lg:p-3 flex flex-row lg:flex-col justify-between lg:justify-start items-center">
           <Score />
-          <Count />
+          <Timer />
         </div>
         <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">
           <div className="bg-white border shadow-lg rounded-xl h-80 md:h-60 mt-2 p-4 lg:p-8 overflow-y-scroll no-scrollbar flex flex-col">

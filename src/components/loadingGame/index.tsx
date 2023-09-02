@@ -2,7 +2,7 @@ import React from "react";
 import { useGame } from "@/utils/useGame";
 
 const LoadingGame = () => {
-  const { isLoadingGame, setIsLoadingGame } = useGame();
+  const { isLoadingGame, createNewGame } = useGame();
   return (
     <div className="game-page flex items-center justify-center flex-col gap-6">
       <h1 className="text-4xl">Merhaba</h1>
@@ -13,7 +13,7 @@ const LoadingGame = () => {
       </p>
       <button
         className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-2xl py-2 px-4 font-bold text-2xl mt-4"
-        onClick={() => setIsLoadingGame(false)}
+        onClick={() => createNewGame(true)}
       >
         Oyuna Başla
       </button>

@@ -18,7 +18,7 @@ import {
 interface ContextProps {
   messages: ChatCompletionRequestMessage[];
   newName: (content: string) => Promise<void>;
-  resetGame: Function;
+  createNewGame: Function;
   isLoadingAnswer: boolean;
   isLoadingGame: boolean;
   setIsLoadingGame: Dispatch<SetStateAction<boolean>>;
@@ -29,6 +29,7 @@ interface ContextProps {
   score: Number;
   gameOver: boolean;
   winner: string;
+  timer: Number;
 }
 
 const GameContext = createContext<Partial<ContextProps>>({});
@@ -43,6 +44,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState("");
+  const [timer, setTimer] = useState(10);
 
   const systemMessage: ChatCompletionRequestMessage = {
     role: "system",
@@ -73,7 +75,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
     role: "assistant",
     content: "Hadi oyuna başlayalım.",
   };
-  function resetGame() {
+  function createNewGame(isFirstGame = false) {
+    if (isFirstGame) {
+      setIsLoadingGame(false);
+    }
     setMessages([systemMessage, welcomeMessage]);
     setIsLoadingAnswer(false);
     setPlayingWith("");
@@ -81,10 +86,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setScore(0);
     setGameOver(false);
     setWinner("");
+    setTimer(10)
   }
   useEffect(() => {
     const initializeChat = () => {
-      resetGame();
+      createNewGame();
     };
 
     if (!messages?.length) {
@@ -97,7 +103,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
       role: "user",
       content,
     };
-
     setMessages((oldMessages: any[]) => {
       const newMessages = [...oldMessages, newMessage];
       if (gameOverControl(newMessages, "system")) return newMessages;
@@ -121,8 +126,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const gameOverControl = (messages: any[], winner: string) => {
-    if (checkGameOver(messages)) {
+  const gameOverControl = (messages: any[], winner: string, isWin = false) => {
+    if (checkGameOver(messages) || isWin) {
       setWinner(winner);
       setGameOver(true);
       return true;
@@ -146,7 +151,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       value={{
         messages,
         newName,
-        resetGame,
+        createNewGame,
         isLoadingAnswer,
         isLoadingGame,
         setIsLoadingGame,
@@ -157,6 +162,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         score,
         gameOver,
         winner,
+        timer,
       }}
     >
       {children}
