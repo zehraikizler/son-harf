@@ -1,9 +1,19 @@
 "use client";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useGame } from "@/utils/useGame";
 
 const Answers = () => {
   const { messages, isLoadingAnswer, isGameOn } = useGame();
+  const bottomEl = useRef<any>(null);
+
+  const scrollToBottom = () => {
+    bottomEl.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div>
       {isGameOn ? (
@@ -46,6 +56,7 @@ const Answers = () => {
               </div>
             );
           })}
+          <div ref={bottomEl}></div>
         </div>
       ) : (
         <div className="flex mb-4 fade-up justify-start">
