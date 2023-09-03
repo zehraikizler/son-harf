@@ -3,7 +3,7 @@ import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 
 function Footer() {
   return (
-    <footer className="mt-auto py-2 text-xs flex items-center justify-between px-4 flex-col lg:flex-row gap-y-1">
+    <footer className="py-2 text-xs flex items-center justify-between px-4 flex-col lg:flex-row gap-y-1">
       <div className="text-center">
         Copyright © {new Date().getFullYear()} All rights reserved
       </div>

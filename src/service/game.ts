@@ -1,5 +1,5 @@
 import db from "@/db/names.json";
-import { sendMessage } from '@/utils/sendMessage'
+import { sendMessage } from "@/utils/sendMessage";
 
 export async function chatGptAnswer(newMessages: any[]) {
   const response = await sendMessage(newMessages);
@@ -33,10 +33,6 @@ export function checkGameOver(messages: any) {
       ].toUpperCase() != secondGamerAnswer.content[0].toUpperCase()
     );
   }
-}
-
-export function endGame() {
-  return "oyun bitti";
 }
 
 export function getScore(messages: any) {

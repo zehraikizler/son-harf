@@ -23,9 +23,9 @@ export default function RootLayout({
       <body className={inter.className + " h-full vsc-initialized"}>
         <ToastProvider>
           <GameProvider>
-            <main className="font-mono flex flex-col">
+            <main className="font-mono flex flex-col h-screen">
               <Header />
-              {children}
+              <div className="h-full">{children}</div>
               <Footer />
             </main>
           </GameProvider>

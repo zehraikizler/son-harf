@@ -5,7 +5,7 @@ const GameOver = () => {
   const { score, createNewGame, playingWith, winner } = useGame();
 
   return (
-    <div className="game-page flex items-center justify-center flex-col gap-6">
+    <div className="h-full flex items-center justify-center flex-col gap-6 py-1 lg:py-6 sm:px-6 lg:px-8">
       <h1
         className={`text-4xl ${
           winner == "user" ? "text-pink-700" : "text-indigo-700"
