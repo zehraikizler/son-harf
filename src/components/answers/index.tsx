@@ -24,7 +24,7 @@ const Answers = () => {
             return (
               <div
                 id={`message-${i}`}
-                className={`flex mb-4 fade-up ${
+                className={`flex mb-1 fade-up ${
                   isUser ? "justify-end" : "justify-start"
                 } ${i === 1 ? "max-w-md" : ""}`}
                 key={i}
