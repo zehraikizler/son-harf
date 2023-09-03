@@ -91,6 +91,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setWinner("");
     setTimer(10)
   }
+  
   useEffect(() => {
     const initializeChat = () => {
       createNewGame();
