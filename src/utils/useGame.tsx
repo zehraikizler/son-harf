@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useRef,
   Dispatch,
   SetStateAction,
 } from "react";
@@ -45,6 +46,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState("");
   const [timer, setTimer] = useState(10);
+  const [isTurn, setIsTurn] = useState('');
+  const timeout = useRef<any>(null)
 
   const systemMessage: ChatCompletionRequestMessage = {
     role: "system",
@@ -98,6 +101,22 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   }, [messages?.length, setMessages]);
 
+  useEffect(()=>{
+    if(isTurn == 'user') {
+      timeout.current = setInterval(()=>{
+        setTimer((timer)=>{
+          if(timer==0) {
+            clearInterval(timeout.current)
+            gameOverControl(messages, "system", true);
+          }
+          return timer-1
+        })
+      }, 1000)
+    } else {
+      clearInterval(timeout.current)
+    }
+  }, [isTurn])
+
   const userAnswerTurn = async (content: string) => {
     const newMessage: ChatCompletionRequestMessage = {
       role: "user",
@@ -110,6 +129,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setScore(getScore(newMessages));
       return newMessages;
     });
+    setIsTurn(()=>'assistant')
+    setTimer(10)
   };
 
   const systemAnswerTurn = async (content: string) => {
@@ -124,6 +145,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       gameOverControl([...oldMessages, reply], "user");
       return [...oldMessages, reply];
     });
+    setIsTurn(()=>'user')
   };
 
   const gameOverControl = (messages: any[], winner: string, isWin = false) => {
