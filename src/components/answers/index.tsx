@@ -16,18 +16,19 @@ const Answers = () => {
 
   const msg = new SpeechSynthesisUtterance();
 
-  useEffect(() => {
-    let systemAnswer = messages[messages.length - 1].content;
-    let system = messages[messages.length - 1].role;
-    if (system == "assistant" && !isGameOn) {
+
+  const sayWelcomeMessage = () => {
+    if (messages[messages.length - 1].role == "assistant" && !isGameOn) {
       msg.text = messages[1].content;
       window.speechSynthesis.speak(msg);
     }
-    if (isGameOn && messages.length < 4 && system) {
-      msg.text == messages[2].content;
-      window.speechSynthesis.speak(msg);
-    } else {
-      msg.text = systemAnswer;
+  };
+
+
+  useEffect(() => {
+    sayWelcomeMessage();
+    if(messages.length > 3) {
+      msg.text = messages[messages.length - 1].content;
       window.speechSynthesis.speak(msg);
     }
   }, [messages]);

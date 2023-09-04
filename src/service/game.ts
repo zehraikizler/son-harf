@@ -30,7 +30,7 @@ export function checkGameOver(messages: any) {
     return (
       firstGamerAnswer.content[
         firstGamerAnswer.content.length - 1
-      ].toUpperCase() != secondGamerAnswer.content[0].toUpperCase()
+      ].toLowerCase() != secondGamerAnswer.content[0].toLowerCase()
     );
   }
 }
