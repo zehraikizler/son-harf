@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang="tr"
       className="h-full bg-gradient-to-l from-indigo-50 via-purple-50 to-pink-50"
     >
       <body className={inter.className + " h-full vsc-initialized"}>

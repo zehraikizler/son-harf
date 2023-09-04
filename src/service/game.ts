@@ -24,7 +24,7 @@ export function computerAnswer(content: string) {
 export function checkGameOver(messages: any) {
   let firstGamerAnswer;
   let secondGamerAnswer;
-  if (messages.length > 3) {
+  if (messages.length > 4) {
     secondGamerAnswer = messages[messages.length - 1];
     firstGamerAnswer = messages[messages.length - 2];
     return (

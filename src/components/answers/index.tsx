@@ -14,6 +14,24 @@ const Answers = () => {
     scrollToBottom();
   }, [messages]);
 
+  const msg = new SpeechSynthesisUtterance();
+
+  useEffect(() => {
+    let systemAnswer = messages[messages.length - 1].content;
+    let system = messages[messages.length - 1].role;
+    if (system == "assistant" && !isGameOn) {
+      msg.text = messages[1].content;
+      window.speechSynthesis.speak(msg);
+    }
+    if (isGameOn && messages.length < 4 && system) {
+      msg.text == messages[2].content;
+      window.speechSynthesis.speak(msg);
+    } else {
+      msg.text = systemAnswer;
+      window.speechSynthesis.speak(msg);
+    }
+  }, [messages]);
+
   return (
     <div>
       {isGameOn ? (
@@ -26,7 +44,7 @@ const Answers = () => {
                 id={`message-${i}`}
                 className={`flex mb-1 fade-up ${
                   isUser ? "justify-end" : "justify-start"
-                } ${i === 1 ? "max-w-md" : ""}`}
+                } ${i === 2 ? "max-w-md" : ""} ${i === 1 ? "hidden" : ""}`}
                 key={i}
               >
                 {!isUser && (
@@ -70,7 +88,7 @@ const Answers = () => {
             style={{ maxWidth: "calc(100% - 45px)" }}
             className="group relative bg-pink-200 px-3 py-2 rounded-3xl rounded-bl-none ml-2"
           >
-            Oyuna başlamak için rakibini seç.
+            {messages[1].content.trim()}
           </div>
         </div>
       )}

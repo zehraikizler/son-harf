@@ -46,8 +46,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState("");
   const [timer, setTimer] = useState(10);
-  const [isTurn, setIsTurn] = useState('');
-  const timeout = useRef<any>(null)
+  const [isTurn, setIsTurn] = useState("");
+  const timeout = useRef<any>(null);
 
   const systemMessage: ChatCompletionRequestMessage = {
     role: "system",
@@ -76,22 +76,26 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
   const welcomeMessage: ChatCompletionRequestMessage = {
     role: "assistant",
+    content: "Oyuna başlamak için rakibini seç.",
+  };
+  const GameStartMessage: ChatCompletionRequestMessage = {
+    role: "assistant",
     content: "Hadi oyuna başlayalım.",
   };
   function createNewGame(isFirstGame = false) {
     if (isFirstGame) {
       setIsLoadingGame(false);
     }
-    setMessages([systemMessage, welcomeMessage]);
+    setMessages([systemMessage, welcomeMessage, GameStartMessage]);
     setIsLoadingAnswer(false);
     setPlayingWith("");
     setIsGameOn(false);
     setScore(0);
     setGameOver(false);
     setWinner("");
-    setTimer(10)
+    setTimer(10);
   }
-  
+
   useEffect(() => {
     const initializeChat = () => {
       createNewGame();
@@ -102,21 +106,21 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   }, [messages?.length, setMessages]);
 
-  useEffect(()=>{
-    if(isTurn == 'user') {
-      timeout.current = setInterval(()=>{
-        setTimer((timer)=>{
-          if(timer==0) {
-            clearInterval(timeout.current)
+  useEffect(() => {
+    if (isTurn == "user") {
+      timeout.current = setInterval(() => {
+        setTimer((timer) => {
+          if (timer == 0) {
+            clearInterval(timeout.current);
             gameOverControl(messages, "system", true);
           }
-          return timer-1
-        })
-      }, 1000)
+          return timer - 1;
+        });
+      }, 1000);
     } else {
-      clearInterval(timeout.current)
+      clearInterval(timeout.current);
     }
-  }, [isTurn])
+  }, [isTurn]);
 
   const userAnswerTurn = async (content: string) => {
     const newMessage: ChatCompletionRequestMessage = {
@@ -130,8 +134,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setScore(getScore(newMessages));
       return newMessages;
     });
-    setIsTurn(()=>'assistant')
-    setTimer(10)
+    setIsTurn(() => "assistant");
+    setTimer(10);
   };
 
   const systemAnswerTurn = async (content: string) => {
@@ -146,7 +150,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       gameOverControl([...oldMessages, reply], "user");
       return [...oldMessages, reply];
     });
-    setIsTurn(()=>'user')
+    setIsTurn(() => "user");
   };
 
   const gameOverControl = (messages: any[], winner: string, isWin = false) => {
