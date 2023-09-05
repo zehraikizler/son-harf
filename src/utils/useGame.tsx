@@ -15,6 +15,7 @@ import {
   computerAnswer,
   chatGptAnswer,
   getScore,
+  isDuplicateAnswer,
 } from "@/service/game";
 interface ContextProps {
   messages: ChatCompletionRequestMessage[];
@@ -72,7 +73,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
               13. Eğer isim bulamazsan yeni bir tur başlatma. 
               14. İlk turda ilk ismi kullanıcı vermek zorunda.
               15. İnsan ismi dışındaki isimler (Şehir ismi, hayvan ismi, eşya ismi vb. gibi) kabul edilemez.
-              16. Sadece ismi ve sıranı bekle.`,
+              16. İsmi yazdıktan sonra sonuna herhangi bir noktalama işareti koyma.
+              17. Sadece ismi ve sıranı bekle.
+              18. Sana isim verildikten sonra sadece cevap ver.`,
   };
   const welcomeMessage: ChatCompletionRequestMessage = {
     role: "assistant",
@@ -147,14 +150,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
 
     setMessages((oldMessages: any[]) => {
-      gameOverControl([...oldMessages, reply], "user");
+      if(gameOverControl([...oldMessages], "user")) return [...oldMessages];
       return [...oldMessages, reply];
     });
     setIsTurn(() => "user");
   };
 
   const gameOverControl = (messages: any[], winner: string, isWin = false) => {
-    if (checkGameOver(messages) || isWin) {
+    if (checkGameOver(messages) || isWin || isDuplicateAnswer(messages)) {
       setWinner(winner);
       setGameOver(true);
       return true;

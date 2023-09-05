@@ -29,9 +29,7 @@ const GameOver = () => {
           return (
             <div
               id={`message-${i}`}
-              className={`flex mb-1 fade-up ${
-                isUser ? "justify-end" : "justify-start"
-              } ${i === 1 ? "hidden" : ""}`}
+              className={`flex mb-1 fade-up ${isUser ? "justify-end" : "justify-start"} ${i == 1 ? "hidden" : ""}  ${i == 2 ? "hidden" : ""}`}
               key={i}
             >
               <div

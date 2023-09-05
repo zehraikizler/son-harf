@@ -35,6 +35,20 @@ export function checkGameOver(messages: any) {
   }
 }
 
+export function isDuplicateAnswer(messages: any) {
+  if (messages.length > 3) {
+    var contentArr = messages.map(function (item: any) {
+      return item.content;
+    });
+    var isDuplicate = contentArr.some(function (item: any, index: any) {
+      return contentArr.indexOf(item) != index;
+    });
+    return isDuplicate;
+  }
+
+  return false
+}
+
 export function getScore(messages: any) {
   return messages.filter((el: any) => el.role === "user").length;
 }
