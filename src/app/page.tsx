@@ -35,7 +35,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <Timer />
       </div>
       <div className="col-span-8 lg:col-span-4 p-3 flex flex-col">
-        <div className="bg-white border shadow-lg rounded-xl h-96 lg:h-full mt-2 p-4 lg:p-8 overflow-y-scroll no-scrollbar flex flex-col">
+        <div className="bg-white border shadow-lg rounded-xl h-80 min-h-[70%] mt-2 p-4 lg:p-8 overflow-y-scroll no-scrollbar">
           <Answers />
         </div>
         <div className="mt-auto">

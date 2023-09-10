@@ -34,7 +34,7 @@ const Answers = () => {
   }, [messages]);
 
   return (
-    <div>
+    <div className="h-auto">
       {isGameOn ? (
         <div>
           {messages?.map((message, i) => {
