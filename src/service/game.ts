@@ -4,7 +4,7 @@ var namesList = db.slice();
 export async function chatGptAnswer(newMessages: any[]) {
   const response = await sendMessage(newMessages);
   const { data } = await response?.json();
-  return data?.choices[0].message;
+  return data;
 }
 
 export function computerAnswer(content: string) {
@@ -26,11 +26,19 @@ export function checkGameOver(messages: any) {
   if (messages.length > 4) {
     secondGamerAnswer = messages[messages.length - 1];
     firstGamerAnswer = messages[messages.length - 2];
-    return (
+    if (
+      secondGamerAnswer.role === "assistant" &&
+      firstGamerAnswer.role === "assistant"
+    )
+      return false;
+    let gameOver =
       firstGamerAnswer.content[
         firstGamerAnswer.content.length - 1
-      ].toLowerCase() != secondGamerAnswer.content[0].toLowerCase()
-    );
+      ].toLowerCase() != secondGamerAnswer.content[0].toLowerCase();
+    if (gameOver) {
+      namesList = db.slice();
+    }
+    return gameOver;
   }
 }
 

@@ -147,7 +147,21 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const systemAnswerTurn = async (content: string) => {
     let reply = {};
     if (playingWith === "chatGpt") {
-      reply = await chatGptAnswer(messages);
+      let data = await chatGptAnswer(messages);
+      if (data.error) {
+        const infoMsg = {
+          role: "assistant",
+          content:
+            "Chat Gpt şuan cevap veremiyor. Otomatik olarak bilgisayarla eşleştirildiniz.",
+        };
+        setMessages((oldMessages: any[]) => {
+          return [...oldMessages, infoMsg];
+        });
+        setPlayingWith("computer");
+        reply = computerAnswer(content);
+      } else {
+        reply = data?.choices[0].message;
+      }
     } else {
       reply = computerAnswer(content);
     }
@@ -160,7 +174,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
 
   const gameOverControl = (messages: any[], winner: string, isWin = false) => {
-    if (checkGameOver(messages) || isWin || isDuplicateAnswer(messages) || !isName(messages)) {
+    if (
+      checkGameOver(messages) ||
+      isWin ||
+      isDuplicateAnswer(messages) ||
+      !isName(messages)
+    ) {
       setWinner(winner);
       setGameOver(true);
       return true;
