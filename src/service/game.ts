@@ -1,6 +1,6 @@
 import db from "@/db/names.json";
 import { sendMessage } from "@/utils/sendMessage";
-
+var namesList = db.slice();
 export async function chatGptAnswer(newMessages: any[]) {
   const response = await sendMessage(newMessages);
   const { data } = await response?.json();
@@ -8,7 +8,6 @@ export async function chatGptAnswer(newMessages: any[]) {
 }
 
 export function computerAnswer(content: string) {
-  let namesList: string[] = db;
   let reply = namesList.filter(
     (element: string) =>
       element[0].toUpperCase() === content[content.length - 1].toUpperCase()
@@ -46,7 +45,20 @@ export function isDuplicateAnswer(messages: any) {
     return isDuplicate;
   }
 
-  return false
+  return false;
+}
+
+export function isName(messages: any) {
+  if (messages.length > 3) {
+    var contentArr = messages.map(function (item: any) {
+      return item.content;
+    });
+    const lastName = contentArr[contentArr.length - 1].toLowerCase();
+    var isName = db.includes(lastName);
+    return isName;
+  }
+
+  return false;
 }
 
 export function getScore(messages: any) {

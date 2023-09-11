@@ -16,6 +16,7 @@ import {
   chatGptAnswer,
   getScore,
   isDuplicateAnswer,
+  isName,
 } from "@/service/game";
 interface ContextProps {
   messages: ChatCompletionRequestMessage[];
@@ -159,7 +160,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
 
   const gameOverControl = (messages: any[], winner: string, isWin = false) => {
-    if (checkGameOver(messages) || isWin || isDuplicateAnswer(messages)) {
+    if (checkGameOver(messages) || isWin || isDuplicateAnswer(messages) || !isName(messages)) {
       setWinner(winner);
       setGameOver(true);
       return true;
