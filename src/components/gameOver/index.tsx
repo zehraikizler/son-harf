@@ -14,7 +14,7 @@ const GameOver = () => {
         {winner == "user" ? "Tebrikler, Kazandınız!" : "Kaybettiniz :("}
       </h1>
       <p className="text-md md:text-lg text-center w-auto xl:w-[54rem] px-6">
-        {playingWith == "chatGpt" ? "Chat GPT" : "Bilgisayar"} ile oynadığınız
+        {playingWith == "chatGpt" ? "ChatGPT" : "Bilgisayar"} ile oynadığınız
         oyunda {winner == "user" ? "kazanan" : "kaybeden"} sizsiniz.
       </p>
 

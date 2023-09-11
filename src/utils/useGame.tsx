@@ -152,7 +152,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         const infoMsg = {
           role: "assistant",
           content:
-            "Chat Gpt şuan cevap veremiyor. Otomatik olarak bilgisayarla eşleştirildiniz.",
+            "ChatGPT şuan cevap veremiyor. Otomatik olarak bilgisayarla eşleştirildiniz.",
         };
         setMessages((oldMessages: any[]) => {
           return [...oldMessages, infoMsg];
