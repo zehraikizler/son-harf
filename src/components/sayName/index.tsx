@@ -18,7 +18,7 @@ const SayName = () => {
 
   const AddAnswer = async () => {
     if (transcript !== "" && listening == false) {
-      await newName(transcript);
+      await newName(transcript.split('.').join(""));
     }
   };
 

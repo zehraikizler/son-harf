@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from "react";
 import Answers from "@/components/answers";
 import Timer from "@/components/timer";
-import SayName from "@/components/say-name";
+import SayName from "@/components/sayName";
 import Score from "@/components/score";
 import LoadingGame from "@/components/loadingGame";
 import { useGame } from "@/utils/useGame";
 import ChoosePlayWith from "@/components/choosePlayWith";
 import GameOver from "@/components/gameOver";
+import SayOrWriteName from "@/components/sayOrWriteName";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const { isLoadingGame, gameOver } = useGame();
@@ -39,7 +40,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
           <Answers />
         </div>
         <div className="mt-auto">
-          <SayName />
+          {/* <SayName /> */}
+          <SayOrWriteName />
         </div>
       </div>
     </div>
