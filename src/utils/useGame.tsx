@@ -97,6 +97,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setGameOver(false);
     setWinner("");
     setTimer(10);
+    setIsTurn("");
   }
 
   useEffect(() => {
@@ -135,10 +136,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
       if (gameOverControl(newMessages, "system")) return newMessages;
 
       setScore(getScore(newMessages));
+      setIsTurn(() => "assistant");
+      setTimer(10);
+      systemAnswerTurn(content);
       return newMessages;
     });
-    setIsTurn(() => "assistant");
-    setTimer(10);
   };
 
   const systemAnswerTurn = async (content: string) => {
@@ -148,9 +150,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     } else {
       reply = computerAnswer(content);
     }
-
     setMessages((oldMessages: any[]) => {
-      if(gameOverControl([...oldMessages], "user")) return [...oldMessages];
+      if (gameOverControl([...oldMessages, reply], "user"))
+        return [...oldMessages, reply];
       return [...oldMessages, reply];
     });
     setIsTurn(() => "user");
@@ -168,7 +170,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setIsLoadingAnswer(true);
     try {
       await userAnswerTurn(content);
-      await systemAnswerTurn(content);
     } catch (error) {
       addToast({ title: "An error occurred", type: "error" });
     } finally {
