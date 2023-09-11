@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useGame } from "@/utils/useGame";
 
 const GameOver = () => {
-  const { messages, score, createNewGame, playingWith, winner } = useGame();
+  const { messages, score, createNewGame, playingWith, winner, gameOverMessage } = useGame();
 
   return (
     <div className="h-full flex items-center justify-center flex-col gap-6 py-1 lg:py-6 sm:px-6 lg:px-8">
@@ -15,7 +15,7 @@ const GameOver = () => {
       </h1>
       <p className="text-md md:text-lg text-center w-auto xl:w-[54rem] px-6">
         {playingWith == "chatGpt" ? "ChatGPT" : "Bilgisayar"} ile oynadığınız
-        oyunda {winner == "user" ? "kazanan" : "kaybeden"} sizsiniz.
+        oyunda {winner == "user" ? "kazanan" : "kaybeden"} sizsiniz. Çünkü {gameOverMessage}
       </p>
 
       <p className="text-md md:text-lg text-center w-auto xl:w-[54rem] px-6 text-purple-600">

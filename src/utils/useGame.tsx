@@ -17,6 +17,7 @@ import {
   getScore,
   isDuplicateAnswer,
   isName,
+  resetNameList,
 } from "@/service/game";
 interface ContextProps {
   messages: ChatCompletionRequestMessage[];
@@ -33,6 +34,7 @@ interface ContextProps {
   gameOver: boolean;
   winner: string;
   timer: Number;
+  gameOverMessage: string;
 }
 
 const GameContext = createContext<Partial<ContextProps>>({});
@@ -49,6 +51,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [winner, setWinner] = useState("");
   const [timer, setTimer] = useState(10);
   const [isTurn, setIsTurn] = useState("");
+  const [gameOverMessage, setGameOverMessage] = useState("");
   const timeout = useRef<any>(null);
 
   const systemMessage: ChatCompletionRequestMessage = {
@@ -99,6 +102,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setWinner("");
     setTimer(10);
     setIsTurn("");
+    setGameOverMessage("");
   }
 
   useEffect(() => {
@@ -123,6 +127,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         });
       }, 1000);
     } else {
+      setTimer(10);
       clearInterval(timeout.current);
     }
   }, [isTurn]);
@@ -138,7 +143,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
       setScore(getScore(newMessages));
       setIsTurn(() => "assistant");
-      setTimer(10);
       systemAnswerTurn(content);
       return newMessages;
     });
@@ -180,10 +184,25 @@ export function GameProvider({ children }: { children: ReactNode }) {
       isDuplicateAnswer(messages) ||
       !isName(messages)
     ) {
+      if (checkGameOver(messages)) {
+        setGameOverMessage("son harfle başlanan bir isim söylenmedi.");
+      }
+      if (isDuplicateAnswer(messages)) {
+        setGameOverMessage("söylenen isim bir kez daha söylendi.");
+      }
+      if (!isName(messages)) {
+        setGameOverMessage("söylenen isim, isim listesinde yer almamaktadır.");
+      }
+      if (isWin) {
+        setGameOverMessage("verilen süre içerisinde cevap verilmedi.");
+      }
+      resetNameList();
       setWinner(winner);
       setGameOver(true);
+      setIsTurn("");
       return true;
     }
+    return false;
   };
 
   const newName = async (content: string) => {
@@ -214,6 +233,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         gameOver,
         winner,
         timer,
+        gameOverMessage,
       }}
     >
       {children}

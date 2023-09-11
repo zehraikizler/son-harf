@@ -35,9 +35,6 @@ export function checkGameOver(messages: any) {
       firstGamerAnswer.content[
         firstGamerAnswer.content.length - 1
       ].toLowerCase() != secondGamerAnswer.content[0].toLowerCase();
-    if (gameOver) {
-      namesList = db.slice();
-    }
     return gameOver;
   }
 }
@@ -71,4 +68,8 @@ export function isName(messages: any) {
 
 export function getScore(messages: any) {
   return messages.filter((el: any) => el.role === "user").length;
+}
+
+export function resetNameList() {
+  namesList = db.slice();
 }
