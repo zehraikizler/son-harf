@@ -2,7 +2,6 @@
 import React from "react";
 import Answers from "@/components/answers";
 import Timer from "@/components/timer";
-import SayName from "@/components/sayName";
 import Score from "@/components/score";
 import LoadingGame from "@/components/loadingGame";
 import { useGame } from "@/utils/useGame";
@@ -10,7 +9,7 @@ import ChoosePlayWith from "@/components/choosePlayWith";
 import GameOver from "@/components/gameOver";
 import SayOrWriteName from "@/components/sayOrWriteName";
 
-export default function Template({ children }: { children: React.ReactNode }) {
+export default function Template() {
   const { isLoadingGame, gameOver } = useGame();
   if (gameOver) {
     return (
@@ -40,7 +39,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
           <Answers />
         </div>
         <div className="mt-auto">
-          {/* <SayName /> */}
           <SayOrWriteName />
         </div>
       </div>
