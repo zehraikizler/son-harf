@@ -4,6 +4,10 @@
 
 Son Harf is a word game that the user plays either against ChatGpt or against the computer, based on deriving the name from the last letter of the name spoken by the opponent.
 
+## 💻 Live Demo
+
+[Live Demo](https://main--idyllic-churros-f27942.netlify.app/)
+
 ## 📖 Prerequisites
 
 - In order to run the project from a container we need `node>=18.17.1`, `npm>=9.8.1` installed on our development machines
