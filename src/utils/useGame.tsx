@@ -140,7 +140,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setMessages((oldMessages: any[]) => {
       const newMessages = [...oldMessages, newMessage];
       if (gameOverControl(newMessages, "system")) return newMessages;
-
+      setTimer(10);
       setScore(getScore(newMessages));
       setIsTurn(() => "assistant");
       systemAnswerTurn(content);

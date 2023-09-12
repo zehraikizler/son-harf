@@ -1,6 +1,6 @@
 "use client";
 import { useGame } from "@/utils/useGame";
-import React, { useEffect, useState } from "react";
+import React from "react";
 const Timer = () => {
   const { timer } = useGame();
 

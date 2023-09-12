@@ -7,7 +7,7 @@ const LoadingGame = () => {
     <div className="h-full flex items-center justify-center flex-col gap-6 py-1 lg:py-6 sm:px-6 lg:px-8">
       <h1 className="text-4xl">Merhaba</h1>
       <p className="text-md md:text-lg text-center w-auto xl:w-[54rem] px-6">
-        Son Harf, kullanıcının ya ChatGpt'ye karşı ya da bilgisayara karşı
+        Son Harf, kullanıcının ya ChatGpt&apos;ye karşı ya da bilgisayara karşı
         oynadığı, rakibin söylediği ismin son harfinden isim türetmeye dayanan
         bir kelime oyunudur.
       </p>

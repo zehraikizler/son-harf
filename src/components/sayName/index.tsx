@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -13,7 +13,7 @@ const SayName = () => {
     useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
+    return <span>Browser doesn&apos;t support speech recognition.</span>;
   }
 
   const AddAnswer = async () => {
@@ -23,8 +23,10 @@ const SayName = () => {
   };
 
   useEffect(() => {
-    AddAnswer();
-  }, [!listening]);
+    if(!listening){
+      AddAnswer();
+    }
+  }, [listening]);
 
   return (
     <div className="flex flex-col justify-center">

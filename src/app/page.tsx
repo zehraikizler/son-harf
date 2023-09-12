@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Answers from "@/components/answers";
 import Timer from "@/components/timer";
 import SayName from "@/components/sayName";

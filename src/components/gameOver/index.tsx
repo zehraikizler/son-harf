@@ -15,7 +15,8 @@ const GameOver = () => {
       </h1>
       <p className="text-md md:text-lg text-center w-auto xl:w-[54rem] px-6">
         {playingWith == "chatGpt" ? "ChatGPT" : "Bilgisayar"} ile oynadığınız
-        oyunda {winner == "user" ? "kazanan" : "kaybeden"} sizsiniz. Çünkü {gameOverMessage}
+        oyunda {winner == "user" ? "kazanan" : "kaybeden"} sizsiniz.
+        Çünkü {gameOverMessage}
       </p>
 
       <p className="text-md md:text-lg text-center w-auto xl:w-[54rem] px-6 text-purple-600">

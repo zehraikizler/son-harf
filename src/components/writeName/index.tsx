@@ -1,9 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "regenerator-runtime/runtime";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import React, { useState } from "react";
 import { useGame } from "@/utils/useGame";
 import { BsSendFill } from "react-icons/bs";
 
@@ -31,7 +27,7 @@ const WriteName = () => {
         placeholder="Bir isim yaz"
         value={input}
         onChange={(event) => setInput(event.target.value)}
-        className="block w-50 text-center text-lg rounded-2xl border-0 py-2 px-3 bg-gradient-to-l from-indigo-200 via-purple-200 to-pink-200 text-purple-800 shadow-lg font-semibold sm:leading-6 outline-none"
+        className="block w-50 capitalize text-center text-lg rounded-2xl border-0 py-2 px-3 bg-gradient-to-l from-indigo-200 via-purple-200 to-pink-200 text-purple-800 shadow-lg font-semibold sm:leading-6 outline-none"
       />
 
       <button
