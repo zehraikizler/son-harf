@@ -11,7 +11,7 @@ const WriteName = () => {
     e.preventDefault();
 
     if (input !== "") {
-      await newName(input.split(".").join(""));
+      await newName(input.split(".").join("").toLocaleLowerCase());
       setInput("");
     }
   };

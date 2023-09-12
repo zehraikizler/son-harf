@@ -24,7 +24,7 @@ const SayName = () => {
 
   const AddAnswer = async () => {
     if (transcript !== "" && listening == false) {
-      await newName(transcript.split(".").join(""));
+      await newName(transcript.split(".").join("").toLocaleLowerCase());
     }
   };
 

@@ -34,7 +34,7 @@ export function checkGameOver(messages: any) {
     let gameOver =
       firstGamerAnswer.content[
         firstGamerAnswer.content.length - 1
-      ].toLowerCase() != secondGamerAnswer.content[0].toLowerCase();
+      ].split(".").join("").toLocaleLowerCase() != secondGamerAnswer.content[0].split(".").join("").toLocaleLowerCase();
     return gameOver;
   }
 }
