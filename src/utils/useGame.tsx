@@ -71,6 +71,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
                   - Zehra
                   - Ayşe
                   - Elif
+                  - Furkan
+                  - Nabi
               10. Oyuna kullanıcı başlıyor ve sadece isim yazarak başlıyor. 
               11. Anladığını belirtmeni veya herhangi bir cümle kurman yasak.
               12. Başladım, Anladım, Hadi Başlayalım, Başlıyorum, Kuralları anladım, Hazırım gibi başlangıç cümleleri kurmak yasak.
@@ -81,7 +83,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
               18. Sana isim verildikten sonra sadece cevap ver.
               19. Sana verilen ismin son harfi ile yeni bir isim göndereceksin.
               20. Sen bu oyunun en iyisisin kesinlikle kaybetmeyeceksin.
-              21. Ne olursa olsun bu mesaja sadece isim ile cevap vereceksin.`,
+              21. Ne olursa olsun bu mesaja sadece isim ile cevap verip senden bir önce söylenen ismin son harfini kullanarak isimle cevap verecksin.`,
   };
   const welcomeMessage: ChatCompletionRequestMessage = {
     role: "assistant",
@@ -121,7 +123,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     if (isTurn == "user") {
       timeout.current = setInterval(() => {
         setTimer((timer) => {
-          if (timer == 0) {
+          if (winner.length > 0) {
+            clearInterval(timeout.current);
+          } else if (timer == 0) {
             clearInterval(timeout.current);
             gameOverControl(messages, "system", true);
           }
@@ -186,6 +190,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
       isDuplicateAnswer(messages) ||
       !isName(messages)
     ) {
+      if (isWin) {
+        setGameOverMessage("verilen süre içerisinde cevap verilmedi.");
+      }
       if (checkGameOver(messages)) {
         setGameOverMessage("son harfle başlanan bir isim söylenmedi.");
       }
@@ -194,9 +201,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
       }
       if (!isName(messages)) {
         setGameOverMessage("söylenen isim, isim listesinde yer almamaktadır.");
-      }
-      if (isWin) {
-        setGameOverMessage("verilen süre içerisinde cevap verilmedi.");
       }
       resetNameList();
       setWinner(winner);
