@@ -12,21 +12,21 @@ const SayName = () => {
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
+  useEffect(() => {
+    if (!listening) {
+      AddAnswer();
+    }
+  }, [listening]);
+
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn&apos;t support speech recognition.</span>;
   }
 
   const AddAnswer = async () => {
     if (transcript !== "" && listening == false) {
-      await newName(transcript.split('.').join(""));
+      await newName(transcript.split(".").join(""));
     }
   };
-
-  useEffect(() => {
-    if(!listening){
-      AddAnswer();
-    }
-  }, [listening]);
 
   return (
     <div className="flex flex-col justify-center">
