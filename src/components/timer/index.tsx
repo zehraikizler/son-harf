@@ -1,6 +1,6 @@
 "use client";
-import { useGame } from "@/utils/useGame";
 import React from "react";
+import { useGame } from "@/utils/useGame";
 const Timer = () => {
   const { timer } = useGame();
 

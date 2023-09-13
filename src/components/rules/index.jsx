@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, Dispatch, SetStateAction } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Rules = ({ showRules, setShowRules }) => {

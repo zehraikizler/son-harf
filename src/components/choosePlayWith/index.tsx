@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useGame } from "@/utils/useGame";
 import { AiOutlineArrowDown } from "react-icons/ai";
 
